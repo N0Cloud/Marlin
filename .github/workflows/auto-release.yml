@@ -10,6 +10,12 @@ jobs:
   builds:
     name: Create Release
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        printer:
+          - a10:
+              name: a10
+
     steps:
       - name: Set up Python
         uses: actions/setup-python@v1
@@ -23,7 +29,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       # TODO build
-      - name: Create Release
+      - name: Create Release ${{ matrix.printer.name }}
         id: create_release
         uses: actions/create-release@v1
         env:
