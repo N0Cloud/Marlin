@@ -1,4 +1,4 @@
-name: Create Release
+name: Release
 
 on:
   push:
@@ -7,8 +7,32 @@ on:
       - stable
 
 jobs:
-  builds:
+  release:
     name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ github.run_number }}
+          release_name: Release ${{ github.ref }} ${{ github.run_number }}
+          draft: false
+          prerelease: false
+
+      - name: Output Release URL File
+        run: echo "${{ steps.create_release.outputs.upload_url }}" > release_url.txt
+
+      - name: Save Release URL File for publish
+        uses: actions/upload-artifact@v1
+        with:
+          name: release_url
+          path: release_url.txt
+
+  publish:
+    name: Publish Release
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -26,13 +50,27 @@ jobs:
         uses: actions/setup-python@v1
         with:
           python-version: '3.7'
+
       - name: Install PlatformIO
         run: |
           python -m pip install --upgrade pip
           pip install platformio
           platformio update
+
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Load Release URL File from release job
+        uses: actions/download-artifact@v1
+        with:
+          name: release_url
+
+      - name: Get Release Upload URL
+        id: get_release_info
+        run: |
+          value=`cat release_url/release_url.txt`
+          echo ::set-output name=upload_url::$value
+
       - name: Build ${{ matrix.printer }}
         run: |
           test ! -z ${{ matrix.buildenv }}
@@ -40,22 +78,13 @@ jobs:
                 $GITHUB_WORKSPACE/printers/${{ matrix.printer }}/Configuration_adv.h \
                 $GITHUB_WORKSPACE/Marlin/
           platformio run --project-dir $GITHUB_WORKSPACE -e ${{ matrix.buildenv }}
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: v${{ github.run_number }}
-          release_name: Release ${{ github.ref }} ${{ github.run_number }}
-          draft: false
-          prerelease: false
-      - name: Upload ${{ matrix.printer }} firmware
+
+      - name: Publish ${{ matrix.printer }} firmware
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          upload_url: ${{ steps.get_release_info.outputs.upload_url }}
           asset_path: ${{ github.workspace }}/.pio/build/${{ matrix.buildenv }}/firmware.hex
           asset_name: firmware-${{ matrix.printer }}-v${{ github.run_number }}.hex
           asset_content_type: application/octet-stream
