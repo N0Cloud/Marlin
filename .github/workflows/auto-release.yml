@@ -13,8 +13,10 @@ jobs:
     strategy:
       matrix:
         printer:
-          - a10:
-              name: a10
+          - a10
+        include:
+          - printer: a10
+            buildenv: mega2560
 
     steps:
       - name: Set up Python
@@ -29,13 +31,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       # TODO build
-      - name: Create Release ${{ matrix.printer.name }}
+      - name: Create Release ${{ matrix.printer }} ${{ matrix.buildenv }}
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: v${{ github.run_number }}
-          release_name: Release ${{ github.run_number }} - ${{ matrix.printer.name }}
+          release_name: Release ${{ github.run_number }}
           draft: false
           prerelease: false
