@@ -30,16 +30,6 @@ jobs:
           platformio update
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Create Draft Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: v${{ github.run_number }}
-          release_name: Release ${{ github.ref }} ${{ github.run_number }}
-          draft: true
-          prerelease: false
       - name: Build ${{ matrix.printer }}
         run: |
           test ! -z ${{ matrix.buildenv }}
@@ -47,6 +37,16 @@ jobs:
                 $GITHUB_WORKSPACE/printers/${{ matrix.printer }}/Configuration_adv.h \
                 $GITHUB_WORKSPACE/Marlin/
           platformio run --project-dir $GITHUB_WORKSPACE -e ${{ matrix.buildenv }}
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ github.run_number }}
+          release_name: Release ${{ github.ref }} ${{ github.run_number }}
+          draft: false
+          prerelease: false
       - name: Upload ${{ matrix.printer }} firmware
         uses: actions/upload-release-asset@v1
         env:
@@ -56,12 +56,3 @@ jobs:
           asset_path: ${{ github.workspace }}/.pio/build/${{ matrix.buildenv }}/firmware.hex
           asset_name: firmware-${{ matrix.printer }}-v${{ github.run_number }}.hex
           asset_content_type: application/octet-stream
-      - name: Publish Release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: v${{ github.run_number }}
-          release_name: Release ${{ github.ref }} ${{ github.run_number }}
-          draft: false
-          prerelease: false
