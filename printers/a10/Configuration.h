@@ -565,7 +565,7 @@
  * Note: For Bowden Extruders make this large enough to allow load/unload.
  */
 #define PREVENT_LENGTHY_EXTRUDE
-#define EXTRUDE_MAXLENGTH 350
+#define EXTRUDE_MAXLENGTH 400
 
 //===========================================================================
 //======================== Thermal Runaway Protection =======================
@@ -966,7 +966,7 @@
 #define XY_PROBE_SPEED 120*60
 
 // Feedrate (mm/m) for the first approach when double-probing (MULTIPLE_PROBING == 2)
-#define Z_PROBE_SPEED_FAST (HOMING_FEEDRATE_Z * 4) 
+#define Z_PROBE_SPEED_FAST (HOMING_FEEDRATE_Z * 4)
 
 // Feedrate (mm/m) for the "accurate" probe of each point
 #define Z_PROBE_SPEED_SLOW (Z_PROBE_SPEED_FAST / 2)
@@ -1673,7 +1673,7 @@
  *
  * Use CRC checks and retries on the SD communication.
  */
-//#define SD_CHECK_AND_RETRY
+#define SD_CHECK_AND_RETRY
 
 /**
  * LCD Menu Items
@@ -1736,7 +1736,7 @@
 //
 // Add individual axis homing items (Home X, Home Y, and Home Z) to the LCD menu.
 //
-//#define INDIVIDUAL_AXIS_HOMING_MENU
+#define INDIVIDUAL_AXIS_HOMING_MENU
 
 //
 // SPEAKER/BUZZER
@@ -1744,7 +1744,7 @@
 // If you have a speaker that can produce tones, enable it here.
 // By default Marlin assumes you have a buzzer with a fixed frequency.
 //
-//#define SPEAKER
+#define SPEAKER
 
 //
 // The duration and frequency for the UI feedback sound.
@@ -1767,7 +1767,7 @@
 //
 // Note: Usually sold with a white PCB.
 //
-//#define REPRAP_DISCOUNT_SMART_CONTROLLER
+#define REPRAP_DISCOUNT_SMART_CONTROLLER
 
 //
 // Original RADDS LCD Display+Encoder+SDCardReader
@@ -1783,7 +1783,7 @@
 //
 // ULTIPANEL as seen on Thingiverse.
 //
-//#define ULTIPANEL
+#define ULTIPANEL
 
 //
 // PanelOne from T3P3 (via RAMPS 1.4 AUX2/AUX3)
