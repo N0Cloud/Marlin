@@ -38,11 +38,8 @@ jobs:
       matrix:
         printer:
           - a10
-          - something
         include:
           - printer: a10
-            buildenv: mega2560
-          - printer: something
             buildenv: mega2560
 
     steps:
