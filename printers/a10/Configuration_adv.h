@@ -2849,8 +2849,8 @@
 #if ENABLED(CUSTOM_USER_MENUS)
   #define CUSTOM_USER_MENU_TITLE "Tools"
   #define USER_SCRIPT_DONE "M117 User Script Done"
-  #define USER_SCRIPT_AUDIBLE_FEEDBACK
-  //#define USER_SCRIPT_RETURN  // Return to status screen after a script
+  //#define USER_SCRIPT_AUDIBLE_FEEDBACK
+  #define USER_SCRIPT_RETURN  // Return to status screen after a script
 
   #define USER_DESC_1 "Probe UBL Slot 0"
   #define USER_GCODE_1 "M190 S65\nG29 P1\nG29 P3\nG29 S0\nG29 A\nG29 F 10.0\nM500\nM140 S0\nM0 Mesh Saved Slot 0"
