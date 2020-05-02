@@ -37,8 +37,11 @@ jobs:
       matrix:
         printer:
           - a10
+          - a10-bltouch
         include:
           - printer: a10
+            buildenv: mega2560
+          - printer: a10-bltouch
             buildenv: mega2560
 
     steps:
