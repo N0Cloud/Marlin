@@ -2328,7 +2328,7 @@
 
   #if EITHER(SENSORLESS_HOMING, SENSORLESS_PROBING)
     // TMC2209: 0...255. TMC2130: -64...63
-    #define X_STALL_SENSITIVITY  90
+    #define X_STALL_SENSITIVITY  80
     #define X2_STALL_SENSITIVITY X_STALL_SENSITIVITY
     #define Y_STALL_SENSITIVITY  100
     //#define Z_STALL_SENSITIVITY  8
@@ -2855,7 +2855,7 @@
   #define USER_DESC_1 "Nozzle Change"
   #define USER_GCODE_1 "G28\nG1 X125 Y105 Z140 F2000\nM104 S275\nM117 Setting Nozzle to 275C\nG4 s10\nM0 Click when Finished\nM104 S0"
 
-  #define USER_DESC_2 "Full Calibration" 
+  #define USER_DESC_2 "Full Calibration"
   #define USER_GCODE_2 "M140 S60\nM190 S60\nG28\nG34\nG29\nM500\nM140 S0\nG28"
 
   #define USER_DESC_3 "PLA Z Calibration"
