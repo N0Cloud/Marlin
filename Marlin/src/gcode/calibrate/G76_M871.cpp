@@ -82,7 +82,7 @@
  */
 void GcodeSuite::G76() {
   // Check if heated bed is available and z-homing is done with probe
-  #if TEMP_SENSOR_BED == 0 || !(HOMING_Z_WITH_PROBE)
+  #if TEMP_SENSOR_BED == 0 // || !(HOMING_Z_WITH_PROBE)
     return;
   #endif
 
