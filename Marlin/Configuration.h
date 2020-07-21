@@ -484,9 +484,9 @@
   // If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
 
   // SKR V1.4 MK3s
-  #define DEFAULT_Kp 16.50
-  #define DEFAULT_Ki 1.16
-  #define DEFAULT_Kd 58.80
+  #define DEFAULT_Kp 13.63
+  #define DEFAULT_Ki 0.88
+  #define DEFAULT_Kd 52.85
 
   // Ultimaker
   //#define DEFAULT_Kp 22.2
