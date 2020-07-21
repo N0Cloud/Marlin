@@ -539,9 +539,9 @@
   //#define PID_BED_DEBUG // Sends debug data to the serial port.
 
   //SKR MK3s V1.4
-  #define DEFAULT_bedKp 28.13
-  #define DEFAULT_bedKi 2.09
-  #define DEFAULT_bedKd 483.07
+   #define DEFAULT_bedKp 48.81
+   #define DEFAULT_bedKi 2.62
+   #define DEFAULT_bedKd 606.94
 
   //120V 250W silicone heater into 4mm borosilicate (MendelMax 1.5+)
   //from FOPDT model - kp=.39 Tp=405 Tdead=66, Tc set to 79.2, aggressive factor of .15 (vs .1, 1, 10)
