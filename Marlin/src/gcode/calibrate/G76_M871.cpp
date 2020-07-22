@@ -189,6 +189,8 @@ void GcodeSuite::G76() {
 
       // Move the nozzle to the probing point and wait for the probe to reach target temp
       do_blocking_move_to_xy(noz_pos);
+      do_blocking_move_to_z(5.0);
+
       SERIAL_ECHOLNPGM("Waiting for probe heating.");
       while (thermalManager.degProbe() < target_probe)
         report_temps(next_temp_report);
@@ -245,6 +247,7 @@ void GcodeSuite::G76() {
     for (;;) {
       // Move probe to probing point and wait for it to reach target temperature
       do_blocking_move_to_xy(noz_pos);
+      do_blocking_move_to_z(1.0);
 
       SERIAL_ECHOLNPAIR("Waiting for probe heating. Bed:", target_bed, " Probe:", target_probe);
       const millis_t probe_timeout_ms = millis() + 900UL * 1000UL;
