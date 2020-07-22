@@ -1602,12 +1602,12 @@
   #if ENABLED(PROBE_TEMP_COMPENSATION)
     // Max temperature that can be reached by heated bed.
     // This is required only for the calibration process.
-    #define PTC_MAX_BED_TEMP BED_MAXTEMP
+    #define PTC_MAX_BED_TEMP (BED_MAXTEMP - 15)
 
     // Park position to wait for probe cooldown
     #define PTC_PARK_POS_X 2.0F
     #define PTC_PARK_POS_Y 2.0F
-    #define PTC_PARK_POS_Z 100.0F
+    #define PTC_PARK_POS_Z 250.0F
 
     // Probe position to probe and wait for probe to reach target temperature
     #define PTC_PROBE_POS_X  150.0F
