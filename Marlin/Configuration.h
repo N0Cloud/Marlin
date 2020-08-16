@@ -764,7 +764,7 @@
  * Override with M203
  *                                      X, Y, Z, E0 [, E1[, E2...]]
  */
-#define DEFAULT_MAX_FEEDRATE          { 200, 200, 30, 80 }
+#define DEFAULT_MAX_FEEDRATE          { 250, 250, 30, 80 }
 
 //#define LIMITED_MAX_FR_EDITING        // Limit edit via M203 or LCD to DEFAULT_MAX_FEEDRATE * 2
 #if ENABLED(LIMITED_MAX_FR_EDITING)
@@ -777,7 +777,7 @@
  * Override with M201
  *                                      X, Y, Z, E0 [, E1[, E2...]]
  */
-#define DEFAULT_MAX_ACCELERATION      { 1250, 1250, 400, 4000 }
+#define DEFAULT_MAX_ACCELERATION      { 2500, 2500, 100, 5000 }
 
 //#define LIMITED_MAX_ACCEL_EDITING     // Limit edit via M201 or LCD to DEFAULT_MAX_ACCELERATION * 2
 #if ENABLED(LIMITED_MAX_ACCEL_EDITING)
@@ -792,9 +792,9 @@
  *   M204 R    Retract Acceleration
  *   M204 T    Travel Acceleration
  */
-#define DEFAULT_ACCELERATION          1250    // X, Y, Z and E acceleration for printing moves
-#define DEFAULT_RETRACT_ACCELERATION  1250    // E acceleration for retracts
-#define DEFAULT_TRAVEL_ACCELERATION   1250    // X, Y, Z acceleration for travel (non printing) moves
+#define DEFAULT_ACCELERATION          2000    // X, Y, Z and E acceleration for printing moves
+#define DEFAULT_RETRACT_ACCELERATION  2000    // E acceleration for retracts
+#define DEFAULT_TRAVEL_ACCELERATION   2000    // X, Y, Z acceleration for travel (non printing) moves
 
 /**
  * Default Jerk limits (mm/s)
@@ -828,7 +828,7 @@
  *   https://blog.kyneticcnc.com/2018/10/computing-junction-deviation-for-marlin.html
  */
 #if DISABLED(CLASSIC_JERK)
-  #define JUNCTION_DEVIATION_MM 0.01  // (mm) Distance from real junction edge
+  #define JUNCTION_DEVIATION_MM 0.013 // (mm) Distance from real junction edge
   #define JD_HANDLE_SMALL_SEGMENTS    // Use curvature estimation instead of just the junction angle
                                       // for small segments (< 1mm) with large junction angles (> 135°).
 #endif
@@ -860,7 +860,7 @@
 //#define Z_MIN_PROBE_USES_Z_MIN_ENDSTOP_PIN
 
 // Force the use of the probe for Z-axis homing
-//#define USE_PROBE_FOR_Z_HOMING
+#define USE_PROBE_FOR_Z_HOMING
 
 /**
  * Z_MIN_PROBE_PIN
@@ -1000,10 +1000,10 @@
 #define PROBING_MARGIN 10
 
 // X and Y axis travel speed (mm/m) between probes
-#define XY_PROBE_SPEED 8000
+#define XY_PROBE_SPEED 10000
 
 // Feedrate (mm/m) for the first approach when double-probing (MULTIPLE_PROBING == 2)
-#define Z_PROBE_SPEED_FAST (HOMING_FEEDRATE_Z * 3)
+#define Z_PROBE_SPEED_FAST (HOMING_FEEDRATE_Z * 4)
 
 // Feedrate (mm/m) for the "accurate" probe of each point
 #define Z_PROBE_SPEED_SLOW (Z_PROBE_SPEED_FAST / 2)
@@ -1017,8 +1017,8 @@
  * A total of 2 does fast/slow probes with a weighted average.
  * A total of 3 or more adds more slow probes, taking the average.
  */
-#define MULTIPLE_PROBING 3
-//#define EXTRA_PROBING    1
+#define MULTIPLE_PROBING 2
+#define EXTRA_PROBING    1
 
 /**
  * Z probes require clearance when deploying, stowing, and moving between
@@ -1061,7 +1061,7 @@
  * These options are most useful for the BLTouch probe, but may also improve
  * readings with inductive probes and piezo sensors.
  */
-//#define PROBING_HEATERS_OFF       // Turn heaters off when probing
+#define PROBING_HEATERS_OFF       // Turn heaters off when probing
 #if ENABLED(PROBING_HEATERS_OFF)
   //#define WAIT_FOR_BED_HEATER     // Wait for bed to heat back up between probes (to improve accuracy)
 #endif
@@ -1136,8 +1136,8 @@
 #define X_MIN_POS 0
 #define Y_MIN_POS -4
 #define Z_MIN_POS 0
-#define X_MAX_POS 254
-#define Y_MAX_POS 212.5
+#define X_MAX_POS X_BED_SIZE
+#define Y_MAX_POS Y_BED_SIZE
 #define Z_MAX_POS 320
 
 /**
@@ -1350,7 +1350,7 @@
 //#define LCD_BED_LEVELING
 
 #if ENABLED(LCD_BED_LEVELING)
-  #define MESH_EDIT_Z_STEP  0.01 // (mm) Step size while manually probing Z axis.
+  #define MESH_EDIT_Z_STEP  0.025 // (mm) Step size while manually probing Z axis.
   #define LCD_PROBE_Z_RANGE 4     // (mm) Z Range centered on Z_MIN_POS for LCD Z adjustment
   #define MESH_EDIT_MENU        // Add a menu to edit mesh points
 #endif
@@ -1380,7 +1380,7 @@
 // For DELTA this is the top-center of the Cartesian print volume.
 #define MANUAL_X_HOME_POS 0
 #define MANUAL_Y_HOME_POS -4
-#define MANUAL_Z_HOME_POS 0.2
+//#define MANUAL_Z_HOME_POS 0.2
 
 // Use "Z Safe Homing" to avoid homing with a Z probe outside the bed area.
 //
@@ -1400,7 +1400,7 @@
 
 // Homing speeds (mm/m)
 #define HOMING_FEEDRATE_XY (50*60)
-#define HOMING_FEEDRATE_Z  (5*60)
+#define HOMING_FEEDRATE_Z  (4*60)
 
 // Validate that endstops are triggered on homing moves
 #define VALIDATE_HOMING_ENDSTOPS
@@ -1508,15 +1508,30 @@
 // @section temperature
 
 // Preheat Constants
-#define PREHEAT_1_LABEL       "PLA"
+#define PREHEAT_1_LABEL      "PLA"
 #define PREHEAT_1_TEMP_HOTEND 190
 #define PREHEAT_1_TEMP_BED     60
 #define PREHEAT_1_FAN_SPEED     0 // Value from 0 to 255
 
-#define PREHEAT_2_LABEL       "PET"
+#define PREHEAT_2_LABEL      "PET"
 #define PREHEAT_2_TEMP_HOTEND 235
-#define PREHEAT_2_TEMP_BED    80
+#define PREHEAT_2_TEMP_BED     80
 #define PREHEAT_2_FAN_SPEED     0 // Value from 0 to 255
+
+#define PREHEAT_3_LABEL      "ABS"
+#define PREHEAT_3_TEMP_HOTEND 240
+#define PREHEAT_3_TEMP_BED    100
+#define PREHEAT_3_FAN_SPEED     0 // Value from 0 to 255
+
+#define PREHEAT_4_LABEL    "NYLON"
+#define PREHEAT_4_TEMP_HOTEND 250
+#define PREHEAT_4_TEMP_BED     90
+#define PREHEAT_4_FAN_SPEED     0 // Value from 0 to 255
+
+#define PREHEAT_5_LABEL   "NOZZLE"
+#define PREHEAT_5_TEMP_HOTEND 280
+#define PREHEAT_5_TEMP_BED      0
+#define PREHEAT_5_FAN_SPEED     0 // Value from 0 to 255
 
 /**
  * Nozzle Park
@@ -1536,9 +1551,9 @@
   #define NOZZLE_PARK_POINT { (X_MAX_POS - 10), (Y_MIN_POS + 10), 20 }
   //#define NOZZLE_PARK_X_ONLY          // X move only is required to park
   //#define NOZZLE_PARK_Y_ONLY          // Y move only is required to park
-  #define NOZZLE_PARK_Z_RAISE_MIN   2   // (mm) Always raise Z by at least this distance
+  #define NOZZLE_PARK_Z_RAISE_MIN   5   // (mm) Always raise Z by at least this distance
   #define NOZZLE_PARK_XY_FEEDRATE 100   // (mm/s) X and Y axes feedrate (also used for delta Z axis)
-  #define NOZZLE_PARK_Z_FEEDRATE   10   // (mm/s) Z axis feedrate (not used for delta printers)
+  #define NOZZLE_PARK_Z_FEEDRATE    5   // (mm/s) Z axis feedrate (not used for delta printers)
 #endif
 
 /**
